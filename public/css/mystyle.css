@@ -1,0 +1,15 @@
+.my-nav-style:active{
+        border-bottom: 2px solid #00f;
+}
+
+.my-icon{
+        height: 25px;
+        width: 25px;
+}
+
+/* Reduce the size of the pagination arrows */
+.pagination li a.btn {
+        font-size: 0.75rem; /* Adjust the font size as needed */
+    }
+    
+    
