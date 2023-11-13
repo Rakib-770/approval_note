@@ -27,7 +27,6 @@
         }
 
         .header-table-td {
-            /* width: 15%; */
         }
 
         td {
@@ -91,9 +90,6 @@
         .hcol {
             float: left;
             width: 75%;
-            /* padding: 10px;
-            height: 300px; */
-            /* Should be removed. Only for demonstration */
         }
 
         /* Clear floats after the columns */
@@ -104,9 +100,6 @@
         }
     </style>
 </head>
-
-
-
 
 @foreach ($final_arr as $items)
     <header>

@@ -12,7 +12,6 @@
                                 {{ session('msg') }}
                             </div>
                         @endif
-                        {{-- <form action="" class="mt-4 p-5" method="POST"> --}}
                         <form action="{{ route('store-approval-data') }}" class="mt-4 p-5" method="POST">
 
                             @csrf
@@ -71,8 +70,6 @@
                                 <textarea type="textarea" class="form-control" name="recommendation_description" id="exampleInputEmail1" rows="5"
                                     required></textarea>
                             </div>
-
-
                             <table class="table-sm w-75">
                                 <thead>
                                     <tr class="fw-normal">
@@ -86,6 +83,8 @@
                                             <select class="form-select-sm w-75" id="exampleSelect1"
                                                 name="supportedByArray[]" required>
                                                 <option value="" disabled selected hidden>--select supported by--
+                                                </option>
+                                                <option value="404" >Not Applicable
                                                 </option>
                                                 @foreach ($users as $list)
                                                     <option value="{{ $list->id }}">{{ $list->name }}</option>
@@ -101,7 +100,6 @@
                                 <thead>
                                     <tr class="fw-normal">
                                         <th scope="col">Checked By <span style="color: red">*</span></th>
-                                        {{-- <th scope="col">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody id="checked_by_tbody">
@@ -110,6 +108,8 @@
                                             <select class="form-select-sm w-75" id="exampleSelect1"
                                                 name="checkedByArray[]" required>
                                                 <option value="" disabled selected hidden>--select checked by--
+                                                </option>
+                                                <option value="404" >Not Applicable
                                                 </option>
                                                 @foreach ($users as $list)
                                                     <option value="{{ $list->id }}">{{ $list->name }}</option>
@@ -125,7 +125,6 @@
                                 <thead>
                                     <tr class="fw-normal">
                                         <th scope="col">Reviewed By <span style="color: red">*</span></th>
-                                        {{-- <th scope="col">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody id="reviewed_by_tbody">
@@ -134,6 +133,8 @@
                                             <select class="form-select-sm w-75" id="exampleSelect1"
                                                 name="reviewedByArray[]" required>
                                                 <option value="" disabled selected hidden>--select reviewed by--
+                                                </option>
+                                                <option value="404" >Not Applicable
                                                 </option>
                                                 @foreach ($users as $list)
                                                     <option value="{{ $list->id }}">{{ $list->name }}</option>
@@ -149,7 +150,6 @@
                                 <thead>
                                     <tr class="fw-normal">
                                         <th scope="col">Recommended By <span style="color: red">*</span></th>
-                                        {{-- <th scope="col">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody id="recommended_by_tbody">
@@ -158,6 +158,8 @@
                                             <select class="form-select-sm w-75" id="exampleSelect1"
                                                 name="recommendedByArray[]" required>
                                                 <option value="" disabled selected hidden>--select recommended by--
+                                                </option>
+                                                <option value="404" >Not Applicable
                                                 </option>
                                                 @foreach ($users as $list)
                                                     <option value="{{ $list->id }}">{{ $list->name }}</option>
@@ -173,7 +175,6 @@
                                 <thead>
                                     <tr class="fw-normal">
                                         <th scope="col">Approved By <span style="color: red">*</span></th>
-                                        {{-- <th scope="col">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody id="approved_by_tbody">

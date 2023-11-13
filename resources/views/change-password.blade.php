@@ -6,7 +6,6 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Chnage Password') }}</div>
-
                     <form action="{{ route('update-password') }}" method="POST">
                         @csrf
                         <div class="card-body">
@@ -19,7 +18,6 @@
                                     {{ session('error') }}
                                 </div>
                             @endif
-
                             <div class="mb-3">
                                 <label for="oldPasswordInput" class="form-label">Old Password</label>
                                 <input name="old_password" type="password" class="form-control @error('old_password') is-invalid @enderror" id="oldPasswordInput"
@@ -41,13 +39,10 @@
                                 <input name="new_password_confirmation" type="password" class="form-control" id="confirmNewPasswordInput"
                                     placeholder="Confirm New Password">
                             </div>
-
                         </div>
-
                         <div class="card-footer">
                             <button class="btn btn-success">Submit</button>
                         </div>
-
                     </form>
                 </div>
             </div>

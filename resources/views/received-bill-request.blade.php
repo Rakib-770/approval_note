@@ -141,7 +141,7 @@
                                         <a style="text-decoration: none"
                                             href="{{ url('pdf-bill-approval-note/' . $item->approval_note_id) }}"
                                             target="_blank" title="View Approval">
-                                            <button type="button" class="btn btn-info btn-sm">Approval</button>
+                                            <button type="button" class="btn btn-info btn-sm">Note</button>
                                         </a>
                                     @else
                                         <p>No attachment found</p>

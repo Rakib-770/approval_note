@@ -18,9 +18,6 @@ class PDFBillApprovalNoteController extends Controller
             // ->join('users', 'approvals.addressed_to_id', '=', 'users.id')
             ->where('approvals.approval_note_id', $id)
             ->get();
-        // print_r($bill_approval_note_details);
-        // exit();
-
         $final_arr = array();
         foreach ($bill_approval_note_details as $key => $value) {
 
@@ -32,10 +29,6 @@ class PDFBillApprovalNoteController extends Controller
                 ->Join('bill_approvals', 'approvals.approval_note_id', '=', 'bill_approvals.approval_note_id')
                 ->where('bill_approvals.approval_note_id', $value->approval_note_id)
                 ->get();
-
-                // print_r($bill_details);
-                // exit();
-
 
             $supports = DB::table('users')
                 ->select(
@@ -118,7 +111,6 @@ class PDFBillApprovalNoteController extends Controller
             $temp['prepared_by'] = $prepared_by;
             array_push($final_arr, $temp);
         }
-
 
         $options = new Options();
         $options->setIsRemoteEnabled(true);

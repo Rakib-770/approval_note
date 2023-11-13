@@ -5,14 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Approval;
 use App\Models\ApprovedBy;
-use App\Models\Background;
 use App\Models\BillApproval;
 use App\Models\CheckedBy;
-use App\Models\Enclosure;
-use App\Models\Justification;
-use App\Models\Objective;
-use App\Models\Proposal;
-use App\Models\Recommendation;
 use App\Models\RecommendedBy;
 use App\Models\ReviewedBy;
 use App\Models\SupportedBy;
@@ -20,7 +14,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class BillApprovalController extends Controller
 {

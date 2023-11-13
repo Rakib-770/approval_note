@@ -26,10 +26,6 @@ class PDFApprovalNoteController extends Controller
             ->where('approvals.approval_note_id', $id)
             ->get();
 
-            // print_r($approval_note_details);
-            // exit();
-
-
         $final_arr = array();
         foreach ($approval_note_details as $key => $value) {
 

@@ -6,7 +6,6 @@ use App\Models\Approval;
 use App\Models\ApprovedBy;
 use App\Models\Background;
 use App\Models\CheckedBy;
-use App\Models\Enclosure;
 use App\Models\Justification;
 use App\Models\Objective;
 use App\Models\Proposal;
@@ -193,7 +192,7 @@ class GenerateApprovalNote extends Controller
                 'id' => $next_id,
                 'approval_note_id' => $approval_table_data->approval_note_id,
                 'supported_by_id' => $request->supportedByArray[$i],
-                'approval_status' => 0,
+                'approval_status' => ($request->supportedByArray[$i] == 404) ? 200 : 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => now(),
             ];
@@ -215,7 +214,7 @@ class GenerateApprovalNote extends Controller
                 'id' => $next_id,
                 'approval_note_id' => $approval_table_data->approval_note_id,
                 'checked_by_id' => $request->checkedByArray[$i],
-                'approval_status' => 0,
+                'approval_status' => ($request->checkedByArray[$i] == 404) ? 200 : 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => now(),
             ];
@@ -240,7 +239,7 @@ class GenerateApprovalNote extends Controller
                 'id' => $next_id,
                 'approval_note_id' => $approval_table_data->approval_note_id,
                 'reviewed_by_id' => $request->reviewedByArray[$i],
-                'approval_status' => 0,
+                'approval_status' => ($request->reviewedByArray[$i] == 404) ? 200 : 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => now(),
             ];
@@ -265,7 +264,7 @@ class GenerateApprovalNote extends Controller
                 'id' => $next_id,
                 'approval_note_id' => $approval_table_data->approval_note_id,
                 'recommended_by_id' => $request->recommendedByArray[$i],
-                'approval_status' => 0,
+                'approval_status' => ($request->recommendedByArray[$i] == 404) ? 200 : 0,
                 'created_at' => Carbon::now(),
                 'updated_at' => now(),
             ];

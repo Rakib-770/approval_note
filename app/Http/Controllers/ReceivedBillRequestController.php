@@ -1,13 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Php;
-use App\Models\Approval;
 
 class ReceivedBillRequestController extends Controller
 {
@@ -15,120 +11,6 @@ class ReceivedBillRequestController extends Controller
     {
         return view('received-bill-request');
     }
-
-
-
-    // public function getReceivedBillRequests()
-    // {
-    //     $userId = Auth::user()->id;
-    //     $receivedBillRequests = DB::table('approvals')
-    //         ->select(
-    //             'approvals.approval_note_id',
-    //             'approvals.approval_note_subject',
-    //             'approvals.approval_note_date',
-    //             'approvals.approval_request_from',
-    //         )
-    //         ->join('bill_approvals', 'approvals.approval_note_id', '=', 'bill_approvals.approval_note_id')
-    //         ->join('supported_bies', 'approvals.approval_note_id', '=', 'supported_bies.approval_note_id')
-    //         ->leftJoin('checked_bies', function ($join) {
-    //             $join->on('approvals.approval_note_id', '=', 'checked_bies.approval_note_id')
-    //                 ->where(function ($query) {
-    //                     $query->where('supported_bies.approval_status', '=', 1)
-    //                     ->orWhereNull('supported_bies.approval_note_id');
-    //                 });
-    //         })
-    //         ->leftJoin('reviewed_bies', function ($join) {
-    //             $join->on('approvals.approval_note_id', '=', 'reviewed_bies.approval_note_id')
-    //                 ->where(function ($query) {
-    //                     $query->where('checked_bies.approval_status', '=', 1)
-    //                     ->orWhereNull('checked_bies.approval_note_id');
-    //                 });
-    //         })
-    //         ->leftJoin('recommended_bies', function ($join) {
-    //             $join->on('approvals.approval_note_id', '=', 'recommended_bies.approval_note_id')
-    //                 ->where(function ($query) {
-    //                     $query->where('reviewed_bies.approval_status', '=', 1)
-    //                     ->orWhereNull('reviewed_bies.approval_note_id');
-    //                 });
-    //         })
-    //         ->leftJoin('approved_bies', function ($join) {
-    //             $join->on('approvals.approval_note_id', '=', 'approved_bies.approval_note_id')
-    //                 ->where(function ($query) {
-    //                     $query->where('recommended_bies.approval_status', '=', 1)
-    //                     ->orWhereNull('recommended_bies.approval_note_id');
-    //                 });
-    //         })
-    //         ->where(function ($query) use ($userId) {
-    //             $query->where('supported_bies.supported_by_id', $userId)
-    //                 ->orWhere('checked_bies.checked_by_id', $userId)
-    //                 ->orWhere('reviewed_bies.reviewed_by_id', $userId)
-    //                 ->orWhere('recommended_bies.recommended_by_id', $userId)
-    //                 ->orWhere('approved_bies.approved_by_id', $userId);
-    //         })
-    //         ->groupBy('approvals.approval_note_id')
-    //         ->groupBy('approvals.approval_note_subject')
-    //         ->groupBy('approvals.approval_note_date')
-    //         ->groupBy('approvals.approval_request_from')
-    //         ->orderBy('approvals.approval_note_id', 'desc')
-    //         ->paginate(10);
-
-    //     return view('received-bill-request', compact('receivedBillRequests'));
-    // }
-
-
-    // public function getReceivedBillRequests()
-    // {
-    //     $userId = Auth::user()->id;
-    //     $receivedBillRequests = DB::table('approvals')
-    //         ->select(
-    //             'approvals.approval_note_id',
-    //             'approvals.approval_note_subject',
-    //             'approvals.approval_note_date',
-    //             'approvals.approval_request_from',
-    //         )
-    //         ->join('bill_approvals', 'approvals.approval_note_id', '=', 'bill_approvals.approval_note_id')
-    //         ->join('supported_bies', 'approvals.approval_note_id', '=', 'supported_bies.approval_note_id')
-    //         ->leftJoin('checked_bies', function ($join) {
-    //             $join->on('approvals.approval_note_id', '=', 'checked_bies.approval_note_id')
-    //                 ->where(function ($query) {
-    //                     $query->where('supported_bies.approval_status', '=', 1)
-    //                         ->orWhereNull('supported_bies.approval_note_id');
-    //                 });
-    //         })
-    //         ->leftJoin('reviewed_bies', function ($join) {
-    //             $join->on('approvals.approval_note_id', '=', 'reviewed_bies.approval_note_id')
-    //                 ->where(function ($query) {
-    //                     $query->where('checked_bies.approval_status', '=', 1)
-    //                         ->orWhereNull('checked_bies.approval_note_id');
-    //                 });
-    //         })
-    //         ->leftJoin('recommended_bies', function ($join) {
-    //             $join->on('approvals.approval_note_id', '=', 'recommended_bies.approval_note_id')
-    //                 ->where(function ($query) {
-    //                     $query->where('reviewed_bies.approval_status', '=', 1)
-    //                         ->orWhereNull('reviewed_bies.approval_note_id');
-    //                 });
-    //         })
-    //         ->leftJoin('approved_bies', function ($join) use ($userId) {
-    //             $join->on('approvals.approval_note_id', '=', 'approved_bies.approval_note_id')
-    //                 ->where(function ($query) {
-    //                     $query->where('recommended_bies.approval_status', '=', 1)
-    //                         ->orWhereNull('recommended_bies.approval_note_id');
-    //                 });
-    //         })
-    //         ->where(function ($query) use ($userId) {
-    //             $query->where('supported_bies.supported_by_id', $userId);
-    //         })
-    //         // ->where('approvals.is_bill', '=', 1)
-    //         ->groupBy('approvals.approval_note_id')
-    //         ->groupBy('approvals.approval_note_subject')
-    //         ->groupBy('approvals.approval_note_date')
-    //         ->groupBy('approvals.approval_request_from')
-    //         ->orderBy('approvals.approval_note_id', 'desc')
-    //         ->paginate(10);
-
-    //     return view('received-bill-request', compact('receivedBillRequests'));
-    // }
 
     public function getReceivedBillRequests()
     {
@@ -237,7 +119,6 @@ class ReceivedBillRequestController extends Controller
                 ['updated_at' => now()]
             );
         Session::flash('msg', 'Bill Successfully Approved');
-        // return $this->getReceivedRequests();
         return redirect('/received-bill-request');
     }
 

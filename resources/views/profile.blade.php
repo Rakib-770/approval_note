@@ -19,11 +19,8 @@
                                                 <img src="/images/man.jpg" alt="" class="img-fluid my-5"
                                                     style="width: 80px;" />
                                                 <h5 style="color: black">{{ Auth::user()->name }}</h5>
-
                                                 <p style="color: black">
-
                                                 </p>
-
                                                 <i class="far fa-edit mb-5"></i>
                                             </div>
                                             <div class="col-md-8">
@@ -41,7 +38,6 @@
                                                         </div>
                                                         <div class="col-6 mb-3">
                                                             <h6>Company</h6>
-                                                            {{-- <p class="text-muted">{{ Auth::user()->company }}</p> --}}
                                                             @php
                                                                 $var = Auth::user()->company;
                                                                 $companyName = DB::table('companies')
@@ -50,12 +46,10 @@
                                                                     ->value('company_name');
                                                             @endphp
                                                             <p class="text-muted">{{ $companyName }}</p>
-
                                                         </div>
 
                                                         <div class="col-6 mb-3">
                                                           <h6>Department</h6>
-                                                          {{-- <p class="text-muted">{{ Auth::user()->company }}</p> --}}
                                                           @php
                                                               $var = Auth::user()->department;
                                                               $departmentName = DB::table('departments')

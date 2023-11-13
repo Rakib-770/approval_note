@@ -8,7 +8,6 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- <title>{{ config('app.name', 'Approval Note') }}</title> --}}
     <title>Approval Note</title>
 
     <!-- Fonts -->
@@ -29,7 +28,7 @@
             <div class="container">
                 @if (Auth::check())
                     <a class="navbar-brand" href="{{ url('/home') }}">Dashboard
-                        {{-- {{ config('app.name', 'Approval Note') }} --}}
+                        
                     </a>
                 @endif
 
@@ -44,14 +43,8 @@
                     <!-- Left Side Of Navbar -->
                     @if (Auth::check())
                         <ul class="navbar-nav me-auto">
-                            {{-- <a class="navbar-brand ms-2 my-nav-style"
-                                href="{{ url('/generate-approval-note') }}">Generate Letter
-                            </a> --}}
                             <a class="navbar-brand ms-2 my-nav-style" href="{{ url('/sent-request') }}">Sent Items
                             </a>
-                            {{-- <a class="navbar-brand ms-2 my-nav-style" href="{{ url('/received-request') }}">Received
-                                Items
-                            </a> --}}
                             <div class="btn-group" role="group">
                                 <button id="btnGroupDrop1" type="button" class="btn dropdown-toggle"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Received
@@ -74,12 +67,6 @@
                             @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else

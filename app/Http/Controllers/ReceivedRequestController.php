@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Http\Request;
 
 class ReceivedRequestController extends Controller
 {
@@ -13,39 +12,6 @@ class ReceivedRequestController extends Controller
     {
         return view('received-request');
     }
-
-    // public function getReceivedRequests()
-    // {
-    //     $userId = Auth::user()->id;
-
-    //     $receivedRequests = DB::table('approvals')
-    //         ->select(
-    //             'approvals.approval_note_id',
-    //             'approvals.approval_note_subject',
-    //             'approvals.approval_note_date',
-    //             'approvals.approval_request_from'
-    //         )
-    //         ->join('approved_bies', 'approvals.approval_note_id', '=', 'approved_bies.approval_note_id')
-    //         ->join('checked_bies', 'approvals.approval_note_id', '=', 'checked_bies.approval_note_id')
-    //         ->join('recommended_bies', 'approvals.approval_note_id', '=', 'recommended_bies.approval_note_id')
-    //         ->join('reviewed_bies', 'approvals.approval_note_id', '=', 'reviewed_bies.approval_note_id')
-    //         ->join('supported_bies', 'approvals.approval_note_id', '=', 'supported_bies.approval_note_id')
-    //         ->where(function ($query) use ($userId) {
-    //             $query->where('approved_bies.approved_by_id', $userId)
-    //                 ->orWhere('checked_bies.checked_by_id', $userId)
-    //                 ->orWhere('recommended_bies.recommended_by_id', $userId)
-    //                 ->orWhere('reviewed_bies.reviewed_by_id', $userId)
-    //                 ->orWhere('supported_bies.supported_by_id', $userId);
-    //         })
-    //         ->groupBy('approvals.approval_note_id')
-    //         ->groupBy('approvals.approval_note_subject')
-    //         ->groupBy('approvals.approval_note_date')
-    //         ->groupBy('approvals.approval_request_from')
-    //         ->orderBy('approval_note_id', 'desc')
-    //         ->paginate(10);
-
-    //     return view('received-request', compact('receivedRequests'));
-    // }
 
     public function getReceivedRequests()
     {
@@ -55,24 +21,28 @@ class ReceivedRequestController extends Controller
                 'approvals.approval_note_id',
                 'approvals.approval_note_subject',
                 'approvals.approval_note_date',
-                'approvals.approval_request_from'
+                'approvals.approval_request_from',
             )
             ->join('supported_bies', 'approvals.approval_note_id', '=', 'supported_bies.approval_note_id')
             ->leftJoin('checked_bies', function ($join) {
                 $join->on('approvals.approval_note_id', '=', 'checked_bies.approval_note_id')
-                    ->where('supported_bies.approval_status', '=', 1);
+                    ->where('supported_bies.approval_status', '=', 1)
+                    ->orWhere('supported_bies.approval_status', '=', 200);
             })
             ->leftJoin('reviewed_bies', function ($join) {
                 $join->on('approvals.approval_note_id', '=', 'reviewed_bies.approval_note_id')
-                    ->where('checked_bies.approval_status', '=', 1);
+                    ->where('checked_bies.approval_status', '=', 1)
+                    ->orWhere('checked_bies.approval_status', '=', 200);
             })
             ->leftJoin('recommended_bies', function ($join) {
                 $join->on('approvals.approval_note_id', '=', 'recommended_bies.approval_note_id')
-                    ->where('reviewed_bies.approval_status', '=', 1);
+                    ->where('reviewed_bies.approval_status', '=', 1)
+                    ->orWhere('reviewed_bies.approval_status', '=', 200);
             })
             ->leftJoin('approved_bies', function ($join) {
                 $join->on('approvals.approval_note_id', '=', 'approved_bies.approval_note_id')
-                    ->where('recommended_bies.approval_status', '=', 1);
+                    ->where('recommended_bies.approval_status', '=', 1)
+                    ->orWhere('recommended_bies.approval_status', '=', 200);
             })
             ->where(function ($query) use ($userId) {
                 $query->where('supported_bies.supported_by_id', $userId)
@@ -81,6 +51,7 @@ class ReceivedRequestController extends Controller
                     ->orWhere('recommended_bies.recommended_by_id', $userId)
                     ->orWhere('approved_bies.approved_by_id', $userId);
             })
+            ->where('approvals.is_bill', '=', 0)
             ->groupBy('approvals.approval_note_id')
             ->groupBy('approvals.approval_note_subject')
             ->groupBy('approvals.approval_note_date')
@@ -150,7 +121,6 @@ class ReceivedRequestController extends Controller
                 ['updated_at' => now()]
             );
         Session::flash('msg', 'Approval note Successfully Approved');
-        // return $this->getReceivedRequests();
         return redirect('/received-request');
     }
 

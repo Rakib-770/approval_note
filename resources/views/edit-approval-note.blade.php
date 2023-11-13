@@ -7,10 +7,11 @@
                 <div class="card">
                     <div class="card-header">{{ __('Generate Approval Note') }}</div>
                     <div class="card-body">
-                        <form action="{{ url('/update-approval-note/' . $editApprovalsID->approval_note_id) }}" class="mt-4 p-5" method="POST">
+                        <form action="{{ url('/update-approval-note/' . $editApprovalsID->approval_note_id) }}"
+                            class="mt-4 p-5" method="POST">
                             @csrf
                             <div class="row">
-                                  
+
                                 <div class="col mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Addressed To</label>
                                     <select name="addressedTo" id="addressedTo" class="form-control" required disabled>
@@ -56,9 +57,8 @@
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Objective</label>
                                 @foreach ($editObjectives as $objective)
-                                    <textarea type="textarea" class="form-control"
-                                        value="{{ $objective->objective_description }}" name="objective_description" id="exampleInputEmail1" rows="3"
-                                        required>{{ $objective->objective_description }}</textarea>
+                                    <textarea type="textarea" class="form-control" value="{{ $objective->objective_description }}"
+                                        name="objective_description" id="exampleInputEmail1" rows="3" required>{{ $objective->objective_description }}</textarea>
                                 @endforeach
 
                             </div>
@@ -92,394 +92,152 @@
                                 @endforeach
                             </div>
 
-                            {{-- <table class="table-sm w-75">
+                            <table class="table-sm w-75">
                                 <thead>
                                     <tr class="fw-normal">
                                         <th scope="col">Supported By</th>
-                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody id="supported_by_tbody">
-                                    <tr>
-                                        <td class="w-50">
-                                            <select class="form-select-sm w-75" id="exampleSelect1"
-                                                name="supportedByArray[]" required>
-                                                <option value="" disabled selected hidden>--select supported by--
-                                                </option>
-                                                @foreach ($userData as $list)
-                                                    @foreach ($editSupportedBies as $supportedBy)
-                                                        @if (count($editSupportedBies) == 1)
-                                                            <option value="{{ $list->id }}"
-                                                                {{ $supportedBy->supported_by_id == $list->id ? 'selected' : '' }}>
-                                                                {{ $list->name }}</option>
+                                    @foreach ($editSupportedBies as $supportedBy)
+                                        <tr>
+                                            <td>
+                                                <select class="form-select-sm w-75" name="supportedByArray[]" disabled>
+                                                    @foreach ($userData as $list)
+                                                        @if ($supportedBy->supported_by_id == 404)
+                                                            <option value="404">
+                                                                Not Applicable
+                                                            </option>
                                                         @else
                                                             <option value="{{ $list->id }}"
                                                                 {{ $supportedBy->supported_by_id == $list->id ? 'selected' : '' }}>
-                                                                {{ $list->name }}</option>
+                                                                {{ $list->name }}
+                                                            </option>
                                                         @endif
-                                                    @break;
-                                                @endforeach
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td><input type="button" class="btn btn-info fw-bold" id="supported_by_add_btn"
-                                            value="+"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <table class="table-sm w-75">
-                            <thead>
-                                <tr class="fw-normal">
-                                    <th scope="col">Checked By</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="checked_by_tbody">
-                                <tr>
-                                    <td class="w-50">
-                                        <select class="form-select-sm w-75" id="exampleSelect1"
-                                            name="checkedByArray[]" required>
-                                            <option value="" disabled selected hidden>--select checked by--
-                                            </option>
-                                            @foreach ($userData as $list)
-                                                @foreach ($editCheckedBies as $checkedBy)
-                                                    @if (count($editCheckedBies) == 1)
-                                                        <option value="{{ $list->id }}"
-                                                            {{ $checkedBy->checked_by_id == $list->id ? 'selected' : '' }}>
-                                                            {{ $list->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <table class="table-sm w-75">
+                                <thead>
+                                    <tr class="fw-normal">
+                                        <th scope="col">Checked By</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="checked_by_tbody">
+                                    @foreach ($editCheckedBies as $checkedBy)
+                                        <tr>
+                                            <td>
+                                                <select class="form-select-sm w-75" name="checkedByArray[]" disabled>
+                                                    @foreach ($userData as $list)
+                                                        @if ($checkedBy->checked_by_id == 404)
+                                                            <option value="404">
+                                                                Not Applicable
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $list->id }}"
+                                                                {{ $checkedBy->checked_by_id == $list->id ? 'selected' : '' }}>
+                                                                {{ $list->name }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <table class="table-sm w-75">
+                                <thead>
+                                    <tr class="fw-normal">
+                                        <th scope="col">Reviewed By</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reviewed_by_tbody">
+                                    @foreach ($editReviewedBies as $reviewedBy)
+                                        <tr>
+                                            <td>
+                                                <select class="form-select-sm w-75" name="reviewedByArray[]" disabled>
+                                                    @foreach ($userData as $list)
+                                                        @if ($reviewedBy->reviewed_by_id == 404)
+                                                            <option value="404">
+                                                                Not Applicable
+                                                            </option>
+                                                        @else
+                                                            <option value="{{ $list->id }}"
+                                                                {{ $reviewedBy->reviewed_by_id == $list->id ? 'selected' : '' }}>
+                                                                {{ $list->name }}
+                                                            </option>
+                                                        @endif
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <table class="table-sm w-75">
+                                <thead>
+                                    <tr class="fw-normal">
+                                        <th scope="col">Recommended By</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recommended_by_tbody">
+                                    @foreach ($editRecommendedBies as $recommendedBy)
+                                        <tr>
+                                            <td>
+                                                <select class="form-select-sm w-75" name="recommendedByArray[]" disabled>
+                                                    @foreach ($userData as $list)
+                                                    @if ($recommendedBy->recommended_by_id == 404)
+                                                    <option value="404">
+                                                        Not Applicable
+                                                    </option>
                                                     @else
-                                                        <option value="{{ $list->id }}"
-                                                            {{ $checkedBy->checked_by_id == $list->id ? 'selected' : '' }}>
-                                                            {{ $list->name }}</option>
+                                                        
                                                     @endif
-                                                @break;
-                                            @endforeach
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td><input type="button" class="btn btn-info fw-bold" id="checked_by_add_btn"
-                                        value="+"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <table class="table-sm w-75">
-                        <thead>
-                            <tr class="fw-normal">
-                                <th scope="col">Reviewed By</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="reviewed_by_tbody">
-                            <tr>
-                                <td class="w-50">
-                                    <select class="form-select-sm w-75" id="exampleSelect1"
-                                        name="reviewedByArray[]" required>
-                                        <option value="" disabled selected hidden>--select reviewed by--
-                                        </option>
-                                        @foreach ($userData as $list)
-                                            @foreach ($editReviewedBies as $reviewedBy)
-                                                @if (count($editReviewedBies) == 1)
-                                                    <option value="{{ $list->id }}"
-                                                        {{ $reviewedBy->reviewed_by_id == $list->id ? 'selected' : '' }}>
-                                                        {{ $list->name }}</option>
-                                                @else
-                                                    <option value="{{ $list->id }}"
-                                                        {{ $reviewedBy->reviewed_by_id == $list->id ? 'selected' : '' }}>
-                                                        {{ $list->name }}</option>
-                                                @endif
-                                            @break;
-                                        @endforeach
+                                                        <option value="{{ $list->id }}"
+                                                            {{ $recommendedBy->recommended_by_id == $list->id ? 'selected' : '' }}>
+                                                            {{ $list->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
                                     @endforeach
-                                </select>
-                            </td>
-                            <td><input type="button" class="btn btn-info fw-bold" id="reviewed_by_add_btn"
-                                    value="+"></td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <table class="table-sm w-75">
-                    <thead>
-                        <tr class="fw-normal">
-                            <th scope="col">Recommended By</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="recommended_by_tbody">
-                        <tr>
-                            <td class="w-50">
-                                <select class="form-select-sm w-75" id="exampleSelect1"
-                                    name="recommendedByArray[]" required>
-                                    <option value="" disabled selected hidden>--select recommended by--
-                                    </option>
-                                    @foreach ($userData as $list)
-                                        @foreach ($editRecommendedBies as $recommendedBy)
-                                            @if (count($editRecommendedBies) == 1)
-                                                <option value="{{ $list->id }}"
-                                                    {{ $recommendedBy->recommended_by_id == $list->id ? 'selected' : '' }}>
-                                                    {{ $list->name }}</option>
-                                            @else
-                                                <option value="{{ $list->id }}"
-                                                    {{ $recommendedBy->recommended_by_id == $list->id ? 'selected' : '' }}>
-                                                    {{ $list->name }}</option>
-                                            @endif
-                                        @break;
-                                    @endforeach
-                                @endforeach
-                            </select>
-                        </td>
-                        <td><input type="button" class="btn btn-info fw-bold"
-                                id="recommended_by_add_btn" value="+">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="table-sm w-75">
-                <thead>
-                    <tr class="fw-normal">
-                        <th scope="col">Approved By</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody id="approved_by_tbody">
-                    <tr>
-                        <td class="w-50">
-                            <select class="form-select-sm w-75" id="exampleSelect1"
-                                name="approvedByArray[]" required>
-                                <option value="" disabled selected hidden>--select approved by--
-                                </option>
-                                @foreach ($userData as $list)
+                                </tbody>
+                            </table>
+                            <table class="table-sm w-75">
+                                <thead>
+                                    <tr class="fw-normal">
+                                        <th scope="col">Approved By</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="approved_by_tbody">
                                     @foreach ($editApprovedBies as $approvedBy)
-                                        @if (count($editApprovedBies) == 1)
-                                            <option value="{{ $list->id }}"
-                                                {{ $approvedBy->approved_by_id == $list->id ? 'selected' : '' }}>
-                                                {{ $list->name }}</option>
-                                        @else
-                                            <option value="{{ $list->id }}"
-                                                {{ $approvedBy->approved_by_id == $list->id ? 'selected' : '' }}>
-                                                {{ $list->name }}</option>
-                                        @endif
-                                        @break;
+                                        <tr>
+                                            <td>
+                                                <select class="form-select-sm w-75" name="approvedByArray[]" disabled>
+                                                    @foreach ($userData as $list)
+                                                        <option value="{{ $list->id }}"
+                                                            {{ $approvedBy->approved_by_id == $list->id ? 'selected' : '' }}>
+                                                            {{ $list->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                        </tr>
                                     @endforeach
-                                @endforeach
-                            </select>
-                        </td>
-                        <td><input type="button" class="btn btn-info fw-bold" id="approved_by_add_btn"
-                                value="+"></td>
-                    </tr>
-                </tbody>
-            </table> --}}
-            <table class="table-sm w-75">
-                <thead>
-                    <tr class="fw-normal">
-                        <th scope="col">Supported By</th>
-                    </tr>
-                </thead>
-                <tbody id="supported_by_tbody">
-                    @foreach ($editSupportedBies as $supportedBy)
-                        <tr>
-                            <td>
-                                <select class="form-select-sm w-75" name="supportedByArray[]" disabled>
-                                    @foreach ($userData as $list)
-                                        <option value="{{ $list->id }}" {{ $supportedBy->supported_by_id == $list->id ? 'selected' : '' }}>
-                                            {{ $list->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
-            <table class="table-sm w-75">
-                <thead>
-                    <tr class="fw-normal">
-                        <th scope="col">Checked By</th>
-                    </tr>
-                </thead>
-                <tbody id="checked_by_tbody">
-                    @foreach ($editCheckedBies as $checkedBy)
-                        <tr>
-                            <td>
-                                <select class="form-select-sm w-75" name="checkedByArray[]" disabled>
-                                    @foreach ($userData as $list)
-                                        <option value="{{ $list->id }}" {{ $checkedBy->checked_by_id == $list->id ? 'selected' : '' }}>
-                                            {{ $list->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
-            <table class="table-sm w-75">
-                <thead>
-                    <tr class="fw-normal">
-                        <th scope="col">Reviewed By</th>
-                    </tr>
-                </thead>
-                <tbody id="reviewed_by_tbody">
-                    @foreach ($editReviewedBies as $reviewedBy)
-                        <tr>
-                            <td>
-                                <select class="form-select-sm w-75" name="reviewedByArray[]" disabled>
-                                    @foreach ($userData as $list)
-                                        <option value="{{ $list->id }}" {{ $reviewedBy->reviewed_by_id == $list->id ? 'selected' : '' }}>
-                                            {{ $list->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
-            <table class="table-sm w-75">
-                <thead>
-                    <tr class="fw-normal">
-                        <th scope="col">Recommended By</th>
-                    </tr>
-                </thead>
-                <tbody id="recommended_by_tbody">
-                    @foreach ($editRecommendedBies as $recommendedBy)
-                        <tr>
-                            <td>
-                                <select class="form-select-sm w-75" name="recommendedByArray[]" disabled>
-                                    @foreach ($userData as $list)
-                                        <option value="{{ $list->id }}" {{ $recommendedBy->recommended_by_id == $list->id ? 'selected' : '' }}>
-                                            {{ $list->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-
-            <table class="table-sm w-75">
-                <thead>
-                    <tr class="fw-normal">
-                        <th scope="col">Approved By</th>
-                    </tr>
-                </thead>
-                <tbody id="approved_by_tbody">
-                    @foreach ($editApprovedBies as $approvedBy)
-                        <tr>
-                            <td>
-                                <select class="form-select-sm w-75" name="approvedByArray[]" disabled>
-                                    @foreach ($userData as $list)
-                                        <option value="{{ $list->id }}" {{ $approvedBy->approved_by_id == $list->id ? 'selected' : '' }}>
-                                            {{ $list->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <button type="submit" value="submit" class="btn btn-primary mt-3">Submit</button>
-        </form>
+                                </tbody>
+                            </table>
+                            <button type="submit" value="submit" class="btn btn-primary mt-3">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-
-</div>
-</div>
-</div>
 @endsection
-
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-{{-- <script type="text/javascript">
-    $(document).ready(function() {
-        $('#supported_by_add_btn').on('click', function() {
-            var html = '';
-            html += '<tr>';
-            html +=
-                '<td> <select class="form-select-sm w-75" id="exampleSelect1" name="supportedByArray[]" required> <option value="" disabled selected hidden>--select supported by--</option> @foreach ($userData as $list) <option value="{{ $list->id }}">{{ $list->name }}</option> @endforeach </select> </td>';
-            html += '<td><input type="button" class="btn btn-danger" id="remove" value="-"></td>';
-            html += '</tr>';
-            $('#supported_by_tbody').append(html);
-        })
-    });
-
-    $(document).on('click', '#remove', function() {
-        $(this).closest('tr').remove();
-    });
-
-    
-
-    $(document).ready(function() {
-        $('#checked_by_add_btn').on('click', function() {
-            var html = '';
-            html += '<tr>';
-            html +=
-                '<td> <select class="form-select-sm w-75" id="exampleSelect1" name="checkedByArray[]" required> <option value="" disabled selected hidden>--select checked by--</option> @foreach ($userData as $list) <option value="{{ $list->id }}">{{ $list->name }}</option> @endforeach </select> </td>';
-            html += '<td><input type="button" class="btn btn-danger" id="remove" value="-"></td>';
-            html += '</tr>';
-            $('#checked_by_tbody').append(html);
-        })
-    });
-
-    $(document).on('click', '#remove', function() {
-        $(this).closest('tr').remove();
-    });
-
-
-    $(document).ready(function() {
-        $('#reviewed_by_add_btn').on('click', function() {
-            var html = '';
-            html += '<tr>';
-            html +=
-                '<td> <select class="form-select-sm w-75" id="exampleSelect1" name="reviewedByArray[]" required> <option value="" disabled selected hidden>--select reviewed by--</option> @foreach ($userData as $list) <option value="{{ $list->id }}">{{ $list->name }}</option> @endforeach </select> </td>';
-            html += '<td><input type="button" class="btn btn-danger" id="remove" value="-"></td>';
-            html += '</tr>';
-            $('#reviewed_by_tbody').append(html);
-        })
-    });
-
-    $(document).on('click', '#remove', function() {
-        $(this).closest('tr').remove();
-    });
-
-
-    $(document).ready(function() {
-        $('#recommended_by_add_btn').on('click', function() {
-            var html = '';
-            html += '<tr>';
-            html +=
-                '<td> <select class="form-select-sm w-75" id="exampleSelect1" name="recommendedByArray[]" required> <option value="" disabled selected hidden>--select recommended by--</option> @foreach ($userData as $list) <option value="{{ $list->id }}">{{ $list->name }}</option> @endforeach </select> </td>';
-            html += '<td><input type="button" class="btn btn-danger" id="remove" value="-"></td>';
-            html += '</tr>';
-            $('#recommended_by_tbody').append(html);
-        })
-    });
-
-    $(document).on('click', '#remove', function() {
-        $(this).closest('tr').remove();
-    });
-
-
-    $(document).ready(function() {
-        $('#approved_by_add_btn').on('click', function() {
-            var html = '';
-            html += '<tr>';
-            html +=
-                '<td> <select class="form-select-sm w-75" id="exampleSelect1" name="approvedByArray[]" required> <option value="" disabled selected hidden>--select approved by--</option> @foreach ($userData as $list) <option value="{{ $list->id }}">{{ $list->name }}</option> @endforeach </select> </td>';
-            html += '<td><input type="button" class="btn btn-danger" id="remove" value="-"></td>';
-            html += '</tr>';
-            $('#approved_by_tbody').append(html);
-        })
-    });
-
-    $(document).on('click', '#remove', function() {
-        $(this).closest('tr').remove();
-    });
-</script> --}}

@@ -7,22 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use App\Models\ApprovedBy;
 use App\Models\Background;
 use App\Models\BillApproval;
-use App\Models\CheckedBy;
-use App\Models\Enclosure;
 use App\Models\Justification;
 use App\Models\Objective;
 use App\Models\Proposal;
 use App\Models\Recommendation;
-use App\Models\RecommendedBy;
-use App\Models\ReviewedBy;
-use App\Models\SupportedBy;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\File;
-
-
 
 class SentRequestController extends Controller
 {
@@ -40,23 +31,6 @@ class SentRequestController extends Controller
             ->orderBy('approval_note_id', 'desc')
             ->paginate(10);
         return view('sent-request', compact('sentRequests'));
-
-        // $sentRequests = DB::table('approvals')
-        // ->select('approvals.*', 'supported_bies.approval_status', 'checked_bies.approval_status', 'reviewed_bies.approval_status', 'recommended_bies.approval_status', 'approved_bies.approval_status')
-        // ->join('supported_bies', 'approvals.approval_note_id', '=', 'supported_bies.approval_note_id')
-        // ->join('checked_bies', 'approvals.approval_note_id', '=', 'checked_bies.approval_note_id')
-        // ->join('reviewed_bies', 'approvals.approval_note_id', '=', 'reviewed_bies.approval_note_id')
-        // ->join('recommended_bies', 'approvals.approval_note_id', '=', 'recommended_bies.approval_note_id')
-        // ->join('approved_bies', 'approvals.approval_note_id', '=', 'approved_bies.approval_note_id')
-        // ->where('approvals.prepared_by_id', $userId)
-        // ->groupBy('approvals.approval_note_id')
-        // ->groupBy('supported_bies.approval_note_id')
-        // ->groupBy('checked_bies.approval_note_id')
-        // ->groupBy('reviewed_bies.approval_note_id')
-        // ->groupBy('recommended_bies.approval_note_id')
-        // ->groupBy('approved_bies.approval_note_id')
-        // ->get();
-        // return view('sent-request', compact('sentRequests'));
     }
 
     public function deleteData($id = null)
@@ -141,6 +115,8 @@ class SentRequestController extends Controller
 
         $editSupportedBies = DB::table('supported_bies')
             ->where('approval_note_id', $id)->get();
+            // print_r($editSupportedBies);
+            // exit();
 
         $editCheckedBies = DB::table('checked_bies')
             ->where('approval_note_id', $id)->get();

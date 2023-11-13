@@ -20,7 +20,9 @@
                             </div>
                         @endif
                     </div>
-                    <table class="table table-striped table-bordered table-hover table-sm ">
+
+
+                    <table id="my-table" class="table table-striped table-bordered table-hover table-sm ">
                         @if (count($sentRequests) === 0)
                             <h3 style="margin-left: 20px">No items available</h3>
                         @else
@@ -74,27 +76,26 @@
                                 @endphp
 
                                 <td>
-                                    {{-- @if (count($approvalStatusValues) === 1 && $approvalStatusValues[0] === 1 && count($supportStatusValues) === 1 && $supportStatusValues[0] === 1 && count($checkStatusValues) === 1 && $checkStatusValues[0] === 1 && count($reviewStatusValues) === 1 && $reviewStatusValues[0] === 1 && count($recommendedStatusValues) === 1 && $recommendedStatusValues[0] === 1)
-                                        <span class="badge bg-success">Approved</span> --}}
                                     @if (in_array(2, $approvalStatusValues) ||
                                             in_array(2, $supportStatusValues) ||
                                             in_array(2, $checkStatusValues) ||
                                             in_array(2, $reviewStatusValues) ||
                                             in_array(2, $recommendedStatusValues))
                                         <span class="badge bg-danger">Rejected</span>
-                                    @elseif (in_array(0, $approvalStatusValues) ||
-                                            empty($approvalStatusValues) ||
-                                            in_array(0, $supportStatusValues) ||
-                                            empty($supportStatusValues) ||
-                                            in_array(0, $checkStatusValues) ||
-                                            empty($checkStatusValues) ||
-                                            in_array(0, $reviewStatusValues) ||
-                                            empty($reviewStatusValues) ||
-                                            in_array(0, $recommendedStatusValues) ||
-                                            empty($recommendedStatusValues))
-                                        <span class="badge bg-warning text-dark">Pending</span>
-                                    @else
+                                    @elseif (
+                                        (array_sum($approvalStatusValues) === 5 &&
+                                            array_sum($supportStatusValues) === 5 &&
+                                            array_sum($checkStatusValues) === 5 &&
+                                            array_sum($reviewStatusValues) === 5 &&
+                                            array_sum($recommendedStatusValues) === 5) ||
+                                            (in_array(1, $approvalStatusValues) &&
+                                                (in_array(1, $supportStatusValues) || in_array(200, $supportStatusValues)) &&
+                                                (in_array(1, $checkStatusValues) || in_array(200, $checkStatusValues)) &&
+                                                (in_array(1, $reviewStatusValues) || in_array(200, $reviewStatusValues)) &&
+                                                (in_array(1, $recommendedStatusValues) || in_array(200, $recommendedStatusValues))))
                                         <span class="badge bg-success">Approved</span>
+                                    @else
+                                        <span class="badge bg-warning text-dark">Pending</span>
                                     @endif
                                 </td>
 
@@ -108,75 +109,79 @@
 
                                 @if ($item->is_bill == 0)
                                     <td>
-                                        <button type="button" class="btn btn-outline-danger btn-sm"
+                                        <button type="button" class="btn btn-outline-dark btn-sm"
                                             disabled>Bill</button>
 
                                         <a href="{{ url('pdf-approval-note/' . $item->approval_note_id) }}"
                                             target="_blank" title="View" style="text-decoration: none">
-                                            <button type="button" class="btn btn-info btn-sm">Approval</button>
-
+                                            <button type="button" class="btn btn-info btn-sm">Note</button>
                                         </a>
                                         @php
                                             $user_ID = Auth::user()->id;
                                             $approvalStatusValues = DB::table('approved_bies')
                                                 ->where('approval_note_id', $item->approval_note_id)
-                                                ->where('approved_by_id', $user_ID)
                                                 ->pluck('approval_status')
                                                 ->toArray();
 
                                             $supportStatusValues = DB::table('supported_bies')
                                                 ->where('approval_note_id', $item->approval_note_id)
-                                                ->where('supported_by_id', $user_ID)
                                                 ->pluck('approval_status')
                                                 ->toArray();
 
                                             $checkStatusValues = DB::table('checked_bies')
                                                 ->where('approval_note_id', $item->approval_note_id)
-                                                ->where('checked_by_id', $user_ID)
                                                 ->pluck('approval_status')
                                                 ->toArray();
 
                                             $reviewStatusValues = DB::table('reviewed_bies')
                                                 ->where('approval_note_id', $item->approval_note_id)
-                                                ->where('reviewed_by_id', $user_ID)
                                                 ->pluck('approval_status')
                                                 ->toArray();
 
                                             $recommendedStatusValues = DB::table('recommended_bies')
                                                 ->where('approval_note_id', $item->approval_note_id)
-                                                ->where('recommended_by_id', $user_ID)
                                                 ->pluck('approval_status')
                                                 ->toArray();
                                         @endphp
 
-                                        <a href="{{ in_array(0, $approvalStatusValues) && in_array(0, $supportStatusValues) && in_array(0, $checkStatusValues) && in_array(0, $reviewStatusValues) && in_array(0, $recommendedStatusValues) ? url('edit-approval-note/' . $item->approval_note_id) : 'javascript:void(0);' }}"
-                                            class="mr-4" style="text-decoration: none"
-                                            @unless (in_array(0, $approvalStatusValues) &&
-                                                    in_array(0, $supportStatusValues) &&
-                                                    in_array(0, $checkStatusValues) &&
-                                                    in_array(0, $reviewStatusValues) &&
-                                                    in_array(0, $recommendedStatusValues))
-                                        onclick="return confirm('The letter is already approved or rejected. You cannot edit this file.');"
-                                        @endunless
-                                            title="Edit">
-                                            <button type="button" class="btn btn-dark btn-sm">Edit</button>
+                                        @if (in_array(2, $approvalStatusValues) ||
+                                                in_array(2, $supportStatusValues) ||
+                                                in_array(2, $checkStatusValues) ||
+                                                in_array(2, $reviewStatusValues) ||
+                                                in_array(2, $recommendedStatusValues) ||
+                                                in_array(1, $approvalStatusValues) ||
+                                                in_array(1, $supportStatusValues) ||
+                                                in_array(1, $checkStatusValues) ||
+                                                in_array(1, $reviewStatusValues) ||
+                                                in_array(1, $recommendedStatusValues))
+                                            <a href="" onclick="return confirm('You can\'t edit this file');">
+                                                <button type="button" class="btn btn-dark btn-sm">Edit</button>
+                                            </a>
+                                        @else
+                                            <a href="{{ url('edit-approval-note/' . $item->approval_note_id) }}">
+                                                <button type="button" class="btn btn-dark btn-sm">Edit</button>
+                                            </a>
+                                        @endif
 
-                                        </a>
-
-                                        <a style="text-decoration: none"
-                                            href="{{ in_array(0, $approvalStatusValues) && in_array(0, $supportStatusValues) && in_array(0, $checkStatusValues) && in_array(0, $reviewStatusValues) && in_array(0, $recommendedStatusValues) ? url('delete-data/' . $item->approval_note_id) : 'javascript:void(0);' }}"
-                                            onclick="return confirm('Warning! Are you sure to delete approval note?"
-                                            @if (
-                                                !(in_array(0, $approvalStatusValues) &&
-                                                    in_array(0, $supportStatusValues) &&
-                                                    in_array(0, $checkStatusValues) &&
-                                                    in_array(0, $reviewStatusValues) &&
-                                                    in_array(0, $recommendedStatusValues)
-                                                )) disabled @endif title="Delete">
-                                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
-
-                                        </a>
-
+                                        @if (in_array(2, $approvalStatusValues) ||
+                                                in_array(2, $supportStatusValues) ||
+                                                in_array(2, $checkStatusValues) ||
+                                                in_array(2, $reviewStatusValues) ||
+                                                in_array(2, $recommendedStatusValues) ||
+                                                in_array(1, $approvalStatusValues) ||
+                                                in_array(1, $supportStatusValues) ||
+                                                in_array(1, $checkStatusValues) ||
+                                                in_array(1, $reviewStatusValues) ||
+                                                in_array(1, $recommendedStatusValues))
+                                            <a href="" onclick="return confirm('You can\'t delete this file');">
+                                                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                            </a>
+                                        @else
+                                            <a href="{{ url('delete-data/' . $item->approval_note_id) }}"
+                                                onclick="return confirm('Are you sure?');">
+                                                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                            </a>
+                                        @endif
                                     </td>
                                 @else
                                     <td>
@@ -215,23 +220,80 @@
                                             <a style="text-decoration: none"
                                                 href="{{ url('pdf-bill-approval-note/' . $item->approval_note_id) }}"
                                                 target="_blank" title="View">
-                                                <button type="button" class="btn btn-info btn-sm">Approval</button>
+                                                <button type="button" class="btn btn-info btn-sm">Note</button>
                                             </a>
+                                            @php
+                                                $user_ID = Auth::user()->id;
+                                                $approvalStatusValues = DB::table('approved_bies')
+                                                    ->where('approval_note_id', $item->approval_note_id)
+                                                    ->pluck('approval_status')
+                                                    ->toArray();
+
+                                                $supportStatusValues = DB::table('supported_bies')
+                                                    ->where('approval_note_id', $item->approval_note_id)
+                                                    ->pluck('approval_status')
+                                                    ->toArray();
+
+                                                $checkStatusValues = DB::table('checked_bies')
+                                                    ->where('approval_note_id', $item->approval_note_id)
+                                                    ->pluck('approval_status')
+                                                    ->toArray();
+
+                                                $reviewStatusValues = DB::table('reviewed_bies')
+                                                    ->where('approval_note_id', $item->approval_note_id)
+                                                    ->pluck('approval_status')
+                                                    ->toArray();
+
+                                                $recommendedStatusValues = DB::table('recommended_bies')
+                                                    ->where('approval_note_id', $item->approval_note_id)
+                                                    ->pluck('approval_status')
+                                                    ->toArray();
+
+                                                
+                                            @endphp
+
+                                            @if (in_array(2, $approvalStatusValues) ||
+                                                in_array(2, $supportStatusValues) ||
+                                                in_array(2, $checkStatusValues) ||
+                                                in_array(2, $reviewStatusValues) ||
+                                                in_array(2, $recommendedStatusValues) ||
+                                                in_array(1, $approvalStatusValues) ||
+                                                in_array(1, $supportStatusValues) ||
+                                                in_array(1, $checkStatusValues) ||
+                                                in_array(1, $reviewStatusValues) ||
+                                                in_array(1, $recommendedStatusValues))
+                                            <a href="" onclick="return confirm('You can\'t edit this file');">
+                                                <button type="button" class="btn btn-dark btn-sm">Edit</button>
+                                            </a>
+                                        @else
+                                            <a href="{{ url('edit-bill/' . $item->approval_note_id) }}">
+                                                <button type="button" class="btn btn-dark btn-sm">Edit</button>
+                                            </a>
+                                        @endif
+
+                                        @if (in_array(2, $approvalStatusValues) ||
+                                                in_array(2, $supportStatusValues) ||
+                                                in_array(2, $checkStatusValues) ||
+                                                in_array(2, $reviewStatusValues) ||
+                                                in_array(2, $recommendedStatusValues) ||
+                                                in_array(1, $approvalStatusValues) ||
+                                                in_array(1, $supportStatusValues) ||
+                                                in_array(1, $checkStatusValues) ||
+                                                in_array(1, $reviewStatusValues) ||
+                                                in_array(1, $recommendedStatusValues))
+                                            <a href="" onclick="return confirm('You can\'t delete this file');">
+                                                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                            </a>
+                                        @else
+                                            <a href="{{ url('delete-bill/' . $item->approval_note_id) }}"
+                                                onclick="return confirm('Are you sure?');">
+                                                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                                            </a>
+                                        @endif
+
                                         @else
                                             <p>No attachment found</p>
                                         @endif
-
-                                        <a style="text-decoration: none"
-                                            href="{{ url('edit-bill/' . $item->approval_note_id) }}" title="Edit">
-                                            <button type="button" class="btn btn-dark btn-sm">Edit</button>
-                                        </a>
-                                        <a style="text-decoration: none"
-                                            href="{{ url('delete-bill/' . $item->approval_note_id) }}"
-                                            onclick="return confirm('Are you sure you want to delete this record?');"
-                                            title="Delete">
-                                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
-                                        </a>
-                                        </a>
                                     </td>
                                 @endif
                             </tr>

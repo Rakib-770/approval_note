@@ -12,7 +12,6 @@
                                 {{ session('msg') }}
                             </div>
                         @endif
-
                         <form action="{{ route('store-bill-approval-data') }}" class="mt-4 p-5" method="POST"
                             enctype="multipart/form-data">
                             @csrf
@@ -64,8 +63,6 @@
                                 <input type="file" class="form-control" name="file" id="file"
                                     accept=".pdf, .doc, .docx, .xls, .xlsx" required>
                             </div>
-
-
 
                             <table class="table-sm w-75">
                                 <thead>
@@ -119,13 +116,11 @@
                                     </tr>
                                 </tbody>
                             </table>
-
-                            
+                        
                             <table class="table-sm w-75">
                                 <thead>
                                     <tr class="fw-normal">
                                         <th scope="col">Reviewed By <span style="color: red">*</span></th>
-                                        {{-- <th scope="col">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody id="reviewed_by_tbody">
@@ -176,7 +171,6 @@
                                 <thead>
                                     <tr class="fw-normal">
                                         <th scope="col">Approved By <span style="color: red">*</span></th>
-                                        {{-- <th scope="col">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody id="approved_by_tbody">
@@ -290,32 +284,24 @@
                 $(this).closest('tr').remove();
             });
 
-
-
             function enforceCharacterLimit(textarea, maxLength) {
                 // Get the current text in the textarea
                 const text = textarea.value;
-
                 // Check if the text exceeds the character limit
                 if (text.length > maxLength) {
                     // Truncate the text to the character limit
                     textarea.value = text.slice(0, maxLength);
-
                     // Optionally, you can provide user feedback about the character limit.
                     // Here, I'm displaying the remaining character count.
                     const remainingChars = maxLength - textarea.value.length;
-
                     // Determine which textarea is being used
                     const charCountId = (textarea.id === "description") ? "charCountDescription" : "charCountNarration";
-
                     document.getElementById(charCountId).textContent = remainingChars + '/' + maxLength;
                 } else {
                     // If the text is within the character limit, update the character count.
                     const remainingChars = maxLength - text.length;
-
                     // Determine which textarea is being used
                     const charCountId = (textarea.id === "description") ? "charCountDescription" : "charCountNarration";
-
                     document.getElementById(charCountId).textContent = remainingChars + '/' + maxLength;
                 }
             }

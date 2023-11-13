@@ -86,9 +86,6 @@
         .hcol {
             float: left;
             width: 75%;
-            /* padding: 10px;
-            height: 300px; */
-            /* Should be removed. Only for demonstration */
         }
 
         /* Clear floats after the columns */
@@ -222,7 +219,6 @@
                                         <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/rejected.png'))) }}"
                                             alt="" style="height: 50px; width: 200px;">
                                     @endif
-
                                 </td>
                             </tr>
                         </table>
@@ -234,12 +230,10 @@
                         <table class="checked-by-table" style="width: 100%">
                             <tr style="background-color: rgb(179, 177, 177)">
                                 <th style="width: 40%">Checked by</th>
-                                {{-- <th style="width: 30%">Remarks </th> --}}
                                 <th style="width: 30%">Signature </th>
                             </tr>
                             <tr>
                                 <td class="table-td">{{ $pitem->uname }}, <br> {{ $pitem->udesignation }} </td>
-                                {{-- <td class="table-td"></td> --}}
                                 @php
                                     $image = "signatures/$pitem->usignature";
                                 @endphp
@@ -252,7 +246,6 @@
                                         <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/rejected.png'))) }}"
                                             alt="" style="height: 50px; width: 200px;">
                                     @endif
-
                                 </td>
                             </tr>
                         </table>
@@ -264,12 +257,10 @@
                         <table class="reviewed-by-table" style="width: 100%">
                             <tr style="background-color: rgb(179, 177, 177)">
                                 <th style="width: 40%">Reviewed by </th>
-                                {{-- <th style="width: 30%">Remarks </th> --}}
                                 <th style="width: 30%">Signature </th>
                             </tr>
                             <tr>
                                 <td class="table-td">{{ $pitem->uname }}, <br> {{ $pitem->udesignation }}</td>
-                                {{-- <td class="table-td"></td> --}}
                                 @php
                                     $image = "signatures/$pitem->usignature";
                                 @endphp
@@ -282,7 +273,6 @@
                                         <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/rejected.png'))) }}"
                                             alt="" style="height: 50px; width: 200px;">
                                     @endif
-
                                 </td>
                             </tr>
                         </table>
@@ -294,12 +284,10 @@
                         <table class="recommended-by-table" style="width: 100%">
                             <tr style="background-color: rgb(179, 177, 177)">
                                 <th style="width: 40%">Recommended by </th>
-                                {{-- <th style="width: 30%">Remarks </th> --}}
                                 <th style="width: 30%">Signature </th>
                             </tr>
                             <tr>
                                 <td class="table-td">{{ $pitem->uname }}, <br> {{ $pitem->udesignation }}</td>
-                                {{-- <td class="table-td"></td> --}}
                                 @php
                                     $image = "signatures/$pitem->usignature";
                                 @endphp
@@ -312,7 +300,6 @@
                                         <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/rejected.png'))) }}"
                                             alt="" style="height: 50px; width: 200px;">
                                     @endif
-
                                 </td>
                             </tr>
                         </table>
@@ -324,12 +311,10 @@
                         <table class="approved-by-table" style="width: 100%;">
                             <tr style="background-color: rgb(179, 177, 177)">
                                 <th style="width: 40%">Approved by </th>
-                                {{-- <th style="width: 30%">Remarks </th> --}}
                                 <th style="width: 30%">Signature </th>
                             </tr>
                             <tr>
                                 <td class="table-td">{{ $pitem->uname }}, <br> {{ $pitem->udesignation }}</td>
-                                {{-- <td class="table-td"></td> --}}
                                 @php
                                     $image = "signatures/$pitem->usignature";
                                 @endphp
@@ -342,7 +327,6 @@
                                         <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('images/rejected.png'))) }}"
                                             alt="" style="height: 50px; width: 200px;">
                                     @endif
-
                                 </td>
                             </tr>
                         </table>
@@ -352,5 +336,4 @@
         </div>
     </body>
 @endforeach
-
 </html>

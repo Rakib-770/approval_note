@@ -11,12 +11,9 @@
                 <div class="shadow-lg">
                     <section class="">
                         <div class="container py-5">
-
                             <div class="row px-5">
-
                                 <div class="row d-flex justify-content-center align-items-center">
                                     <table class="table table-striped table-bordered table-hover table-sm ">
-
                                         <thead class="">
                                             <tr class="" style="color: ; text-align:left">
                                                 <th scope="col" class="">Name</th>
@@ -49,15 +46,11 @@
                                         <button type="submit" class="btn btn-success">Add</button>
                                     </form>
                                 </div>
-
                             </div>
-
                         </div>
-
                     </section>
                 </div>
             </div>
         </div>
-
     </div>
 @endsection

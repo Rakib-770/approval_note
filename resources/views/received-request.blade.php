@@ -21,8 +21,7 @@
                             </div>
                         @endif
                     </div>
-
-
+                    
                     <table class="table table-striped table-bordered table-hover table-sm">
 
                         @if (count($receivedRequests) === 0)

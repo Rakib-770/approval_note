@@ -82,7 +82,7 @@ class RegisterController extends Controller
             'department' => $data['department'],
             'signature' => $newSignatureName,
             'company' => $data['company'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
         ]);
     }
 
